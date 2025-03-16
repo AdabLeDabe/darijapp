@@ -2,7 +2,7 @@ import { Question } from "../types/Question";
 import { Word } from "../types/Word";
 import { QuestionType } from "../types/QuestionType";
 import { words } from "../data/words";
-import { useState } from "react";
+import { useState, JSX } from "react";
 
 const wordsList = [...words];
 
@@ -54,25 +54,37 @@ const QuestionComponent = () => {
 
   function getOptionClassName(answer: Word) {
     let className = "option-button";
-      
-      if (selectedOption === answer) {
-        className += " selected";
-      }
-      
-      // if (isAnswered) {
-      //   if (answer === correctAnswer) {
-      //     className += " correct";
-      //   } else if (selectedOption === answer) {
-      //     className += " incorrect";
-      //   }
-      // }
-      
-      return className;
+    if (selectedOption === answer) {
+      className += " selected";
+    }
+    return className;
   }
 
+  function checkAnswer() {
+    if (selectedOption === null)
+    {
+      alert("Choisissez une réponse");
+      return;
+    }
+    else if (selectedOption === currentQuestion.CorrectAnswer)
+    {
+      alert("Bonne réponse");
+    }
+    else
+    {
+      if (currentQuestion.Type === QuestionType.ArabicToFrench)
+        alert(`Mauvaise réponse, la bonne réponse était ${currentQuestion.CorrectAnswer.French}`)
+      else
+        alert(`Mauvaise réponse, la bonne réponse était ${currentQuestion.CorrectAnswer.Arabic} ( ${currentQuestion.CorrectAnswer.LiteralArabic} )`)
+    }
+    setCurrentQuestion(GenerateNewQuestion());
+    setSelectedOption(null);
+  }
+
+  var questionDisplay: JSX.Element;
   if (currentQuestion.Type == QuestionType.ArabicToFrench)
   {
-    return (
+    questionDisplay = (
       <div>
         <h3>Traduisez en français:</h3>
         <h2>{currentQuestion.CorrectAnswer.LiteralArabic} - {currentQuestion.CorrectAnswer.Arabic}</h2>
@@ -91,7 +103,7 @@ const QuestionComponent = () => {
   }
   else
   {
-    return (
+    questionDisplay = (
       <div>
         <h3>Traduisez en Arabe:</h3>
         <h2>{currentQuestion.CorrectAnswer.French}</h2>
@@ -108,6 +120,14 @@ const QuestionComponent = () => {
       </div>
     )
   }
+
+  return (
+    <div>
+      {questionDisplay}
+      <br />
+      <button onClick={checkAnswer}>Valider</button>
+    </div>
+  );
 }
 
 export default QuestionComponent;
