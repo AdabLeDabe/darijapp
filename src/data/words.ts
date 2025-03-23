@@ -797,7 +797,7 @@ export const words: Word[] = [
     },
     {
        French:"chez",
-       Arabic:"عand",
+       Arabic:"ɛand",
        LiteralArabic:"عند",
        Tags:[
           "Leçon 3"
@@ -809,7 +809,7 @@ export const words: Word[] = [
     },
     {
        French:"oui",
-       Arabic:"nعam",
+       Arabic:"nɛam",
        LiteralArabic:"نعم",
        Tags:[
           "Leçon 3"
@@ -925,7 +925,7 @@ export const words: Word[] = [
     },
     {
        French:"après-midi",
-       Arabic:"ɛašīya",
+       Arabic:"ɛašīyya",
        LiteralArabic:"عشيّة",
        Tags:[
           "Leçon 3"

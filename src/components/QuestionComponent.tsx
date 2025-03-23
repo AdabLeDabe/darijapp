@@ -22,29 +22,32 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-// TODO fix this method to avoid duplicates
-function GetRandomWord(wordToAvoid: Word | null = null) {
+function GetRandomWord(wordToAvoid: Word[] | null = null) {
   if (wordToAvoid == null) {
     return wordsList[Math.floor(Math.random() * wordsList.length)];
   }
 
-  var generatedWord: Word;
+  let generatedWord: Word;
   do {
     generatedWord = GetRandomWord();
-  } while (generatedWord == wordToAvoid)
+  } while (wordToAvoid.includes(generatedWord))
 
   return generatedWord;
 }
 
 function GenerateNewQuestion() {
   const wordToTranslate: Word = GetRandomWord();
+  let words = [wordToTranslate];
+  for (let i = 0; i < 3; i++) {
+    words.push(GetRandomWord(words));
+  }
   return {
     CorrectAnswer : wordToTranslate,
     Answers: shuffleArray([
-      wordToTranslate,
-      GetRandomWord(wordToTranslate),
-      GetRandomWord(wordToTranslate),
-      GetRandomWord(wordToTranslate)]),
+      words[0],
+      words[1],
+      words[2],
+      words[3]]),
     Type : Math.floor(Math.random() * 2) as QuestionType
   };
 }
