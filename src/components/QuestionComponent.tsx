@@ -53,7 +53,7 @@ const QuestionComponent = () => {
   const [currentQuestion, setCurrentQuestion] = useState<Question>(GenerateNewQuestion());
 
   function getOptionClassName(answer: Word) {
-    let className = "option-button";
+    let className = "button";
     if (selectedOption === answer) {
       className += " selected";
     }
@@ -90,12 +90,14 @@ const QuestionComponent = () => {
         <h2>{currentQuestion.CorrectAnswer.LiteralArabic} - {currentQuestion.CorrectAnswer.Arabic}</h2>
         <h3>{currentQuestion.CorrectAnswer.Details}</h3>
         <br />
-        <div>
+        <div className="button-grid">
           {currentQuestion.Answers.map((answer, index) => (
             <button
             key={index}
             onClick={() => setSelectedOption(answer)}
-            className={getOptionClassName(answer)}>{answer.French}</button>
+            className={getOptionClassName(answer)}>
+              <span className="button-text">{answer.French}</span>
+            </button>
           ))}
         </div>
       </div>
@@ -109,12 +111,14 @@ const QuestionComponent = () => {
         <h2>{currentQuestion.CorrectAnswer.French}</h2>
         <h3>{currentQuestion.CorrectAnswer.Details}</h3>
         <br />
-        <div>
+        <div className="button-grid">
           {currentQuestion.Answers.map((answer, index) => (
             <button
             key={index}
             onClick={() => setSelectedOption(answer)}
-            className={getOptionClassName(answer)}>{answer.LiteralArabic} - {answer.Arabic}</button>
+            className={getOptionClassName(answer)}>
+              <span className="button-text">{answer.LiteralArabic} - {answer.Arabic}</span>
+            </button>
           ))}
         </div>
       </div>
@@ -125,7 +129,9 @@ const QuestionComponent = () => {
     <div>
       {questionDisplay}
       <br />
-      <button onClick={checkAnswer}>Valider</button>
+      <button className="button" onClick={checkAnswer}>
+        <span className="button-text">Valider</span>
+      </button>
     </div>
   );
 }
