@@ -22,28 +22,32 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-function GetRandomWord(wordToAvoid: Word | null = null) {
+function GetRandomWord(wordToAvoid: Word[] | null = null) {
   if (wordToAvoid == null) {
     return wordsList[Math.floor(Math.random() * wordsList.length)];
   }
 
-  var generatedWord: Word;
+  let generatedWord: Word;
   do {
     generatedWord = GetRandomWord();
-  } while (generatedWord == wordToAvoid)
+  } while (wordToAvoid.includes(generatedWord))
 
   return generatedWord;
 }
 
 function GenerateNewQuestion() {
   const wordToTranslate: Word = GetRandomWord();
+  let words = [wordToTranslate];
+  for (let i = 0; i < 3; i++) {
+    words.push(GetRandomWord(words));
+  }
   return {
     CorrectAnswer : wordToTranslate,
     Answers: shuffleArray([
-      wordToTranslate,
-      GetRandomWord(wordToTranslate),
-      GetRandomWord(wordToTranslate),
-      GetRandomWord(wordToTranslate)]),
+      words[0],
+      words[1],
+      words[2],
+      words[3]]),
     Type : Math.floor(Math.random() * 2) as QuestionType
   };
 }
@@ -53,7 +57,7 @@ const QuestionComponent = () => {
   const [currentQuestion, setCurrentQuestion] = useState<Question>(GenerateNewQuestion());
 
   function getOptionClassName(answer: Word) {
-    let className = "option-button";
+    let className = "button";
     if (selectedOption === answer) {
       className += " selected";
     }
@@ -86,16 +90,20 @@ const QuestionComponent = () => {
   {
     questionDisplay = (
       <div>
-        <h3>Traduisez en français:</h3>
-        <h2>{currentQuestion.CorrectAnswer.LiteralArabic} - {currentQuestion.CorrectAnswer.Arabic}</h2>
-        <h3>{currentQuestion.CorrectAnswer.Details}</h3>
-        <br />
-        <div>
+        <div className="question">
+          <h1>Traduisez l'expression suivante en français:</h1>
+          <br />
+          <h1>{currentQuestion.CorrectAnswer.LiteralArabic} - {currentQuestion.CorrectAnswer.Arabic}</h1>
+          <h2>{currentQuestion.CorrectAnswer.Details}</h2>
+        </div>
+        <div className="button-grid">
           {currentQuestion.Answers.map((answer, index) => (
             <button
             key={index}
             onClick={() => setSelectedOption(answer)}
-            className={getOptionClassName(answer)}>{answer.French}</button>
+            className={getOptionClassName(answer)}>
+              <span className="button-text">{answer.French}</span>
+            </button>
           ))}
         </div>
       </div>
@@ -105,16 +113,20 @@ const QuestionComponent = () => {
   {
     questionDisplay = (
       <div>
-        <h3>Traduisez en Arabe:</h3>
-        <h2>{currentQuestion.CorrectAnswer.French}</h2>
-        <h3>{currentQuestion.CorrectAnswer.Details}</h3>
-        <br />
-        <div>
+        <div className="question">
+          <h1>Traduisez l'expression suivante en arabe:</h1>
+          <br />
+          <h1>{currentQuestion.CorrectAnswer.French}</h1>
+          <h2>{currentQuestion.CorrectAnswer.Details}</h2>
+        </div>
+        <div className="button-grid">
           {currentQuestion.Answers.map((answer, index) => (
             <button
             key={index}
             onClick={() => setSelectedOption(answer)}
-            className={getOptionClassName(answer)}>{answer.LiteralArabic} - {answer.Arabic}</button>
+            className={getOptionClassName(answer)}>
+              <span className="button-text">{answer.LiteralArabic} - {answer.Arabic}</span>
+            </button>
           ))}
         </div>
       </div>
@@ -125,7 +137,9 @@ const QuestionComponent = () => {
     <div>
       {questionDisplay}
       <br />
-      <button onClick={checkAnswer}>Valider</button>
+      <button className="button" onClick={checkAnswer}>
+        <span className="button-text">Valider</span>
+      </button>
     </div>
   );
 }

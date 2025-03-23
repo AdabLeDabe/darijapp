@@ -1,11 +1,14 @@
 import './App.css'
+import HeaderComponent from './components/Header';
 import QuestionComponent from './components/QuestionComponent';
 
 function App() {
   return (
     <>
-      <h1>Darijapp</h1>
-      <QuestionComponent />
+      <HeaderComponent />
+      <div className='container'>
+        <QuestionComponent />
+      </div>
     </>
   )
 }
