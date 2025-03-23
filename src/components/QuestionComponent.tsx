@@ -22,6 +22,7 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
+// TODO fix this method to avoid duplicates
 function GetRandomWord(wordToAvoid: Word | null = null) {
   if (wordToAvoid == null) {
     return wordsList[Math.floor(Math.random() * wordsList.length)];
@@ -86,10 +87,12 @@ const QuestionComponent = () => {
   {
     questionDisplay = (
       <div>
-        <h3>Traduisez en français:</h3>
-        <h2>{currentQuestion.CorrectAnswer.LiteralArabic} - {currentQuestion.CorrectAnswer.Arabic}</h2>
-        <h3>{currentQuestion.CorrectAnswer.Details}</h3>
-        <br />
+        <div className="question">
+          <h1>Traduisez l'expression suivante en français:</h1>
+          <br />
+          <h1>{currentQuestion.CorrectAnswer.LiteralArabic} - {currentQuestion.CorrectAnswer.Arabic}</h1>
+          <h2>{currentQuestion.CorrectAnswer.Details}</h2>
+        </div>
         <div className="button-grid">
           {currentQuestion.Answers.map((answer, index) => (
             <button
@@ -107,10 +110,12 @@ const QuestionComponent = () => {
   {
     questionDisplay = (
       <div>
-        <h3>Traduisez en Arabe:</h3>
-        <h2>{currentQuestion.CorrectAnswer.French}</h2>
-        <h3>{currentQuestion.CorrectAnswer.Details}</h3>
-        <br />
+        <div className="question">
+          <h1>Traduisez l'expression suivante en arabe:</h1>
+          <br />
+          <h1>{currentQuestion.CorrectAnswer.French}</h1>
+          <h2>{currentQuestion.CorrectAnswer.Details}</h2>
+        </div>
         <div className="button-grid">
           {currentQuestion.Answers.map((answer, index) => (
             <button

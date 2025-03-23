@@ -35,6 +35,20 @@ body {
   text-align: center;
 }
 
+.question {
+  margin-top: 2rem;
+}
+
+.question h1 {
+  font-size: 2rem;
+}
+
+.question h2 {
+  font-size: 1.5rem;
+  font-style: italic;
+  color: lightgrey;
+}
+
 .button-grid {
   margin-top: 2rem;
   margin-left: 0.5rem;
@@ -53,15 +67,25 @@ body {
   padding-right: 2rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  color: white;
+}
+
+.button:hover {
+  background-color: #5892cf;
 }
 
 .button-text {
-  color: white;
   font-size: 2rem;
 }
 
 .selected {
-  background-color: #5892cf;
+  background-color: white;
+  color: #5892cf;
+}
+
+.selected:hover {
+  background-color: #d0dff0;
+  color: #5892cf;
 }
 
 @media (min-width: 768px) {
